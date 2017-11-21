@@ -28,6 +28,14 @@ class SuperHeroTableViewCellTests: ScreenshotTest {
         verify(view: cell)
     }
 
+    func testSuperHeroCellWithBigName(){
+        let cell = givenASuperHeroTableViewCell()
+        
+        cell.configure(forItem: SuperHeroMother.givenASuperHeroWithBigName(isAvenger: true))
+        
+        verify(view: cell)
+    }
+    
     private func givenASuperHeroTableViewCell() -> SuperHeroTableViewCell {
         return UINib(nibName: "SuperHeroTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil)[0] as! SuperHeroTableViewCell
     }
