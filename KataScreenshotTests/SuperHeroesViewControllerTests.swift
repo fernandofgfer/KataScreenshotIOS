@@ -12,15 +12,16 @@ import UIKit
 class SuperHeroesViewControllerTests: ScreenshotTest {
 
     fileprivate let repository = MockSuperHeroesRepository()
-
+    let numberOfSuperHeroes = 10
+    
     func testShowsEmptyCase() {
         givenThereAreNoSuperHeroes()
 
-        let viewController = getSuperHeroDetailViewController()
+        let viewController = getSuperHeroViewController()
 
         verify(viewController: viewController)
     }
-
+    
     fileprivate func givenThereAreSomeAvengers() -> [SuperHero] {
         return givenThereAreSomeSuperHeroes(avengers: true)
     }
@@ -42,7 +43,7 @@ class SuperHeroesViewControllerTests: ScreenshotTest {
         return superHeroes
     }
 
-    fileprivate func getSuperHeroDetailViewController() -> UIViewController {
+    fileprivate func getSuperHeroViewController() -> UIViewController {
         let superHeroesViewController = ServiceLocator()
             .provideSuperHeroesViewController() as! SuperHeroesViewController
         superHeroesViewController.presenter = SuperHeroesPresenter(
