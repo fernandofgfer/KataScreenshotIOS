@@ -1,52 +1,48 @@
 //
 //  SuperHeroDetailViewControllerTests.swift
-//  KataSuperHeroes
+//  KataScreenshotTests
 //
-//  Created by Sergio Gutiérrez on 22/12/16.
-//  Copyright © 2016 GoKarumi. All rights reserved.
+//  Created by Fernando García Fernández on 21/11/17.
+//  Copyright © 2017 Karumi. All rights reserved.
 //
 
+import Foundation
 import UIKit
 @testable import KataScreenshot
 
-class SuperHeroDetailViewControllerTests: ScreenshotTest {
-
+class SuperHeroDetailViewControllerTests: ScreenshotTest{
+    
     fileprivate let repository = MockSuperHeroesRepository()
-
-    func testShowsSuperHeroWithNoBadge() {
-        let superHero = givenASuperHero(isAvenger: false)
+    let superHeroName = "Mr. Clean"
+    
+    func testSuperHeroDetailAppearWithoutBadge(){
+        givenASuperHero(isAvenger: false)
         
-        let viewController = getSuperHeroDetailViewController(superHero.name)
-
+        let viewController = getSuperHeroDetailViewController()
+        
         verify(viewController: viewController)
     }
-
-    func testShowsSuperHeroWithBadge() {
-        let superHero = givenASuperHero(isAvenger: true)
-
-        let viewController = getSuperHeroDetailViewController(superHero.name)
-
+    
+    func testSuperHeroDetailAppearWithBadge(){
+        givenASuperHero(isAvenger: true)
+        
+        let viewController = getSuperHeroDetailViewController()
+        
         verify(viewController: viewController)
     }
-
-    func givenASuperHero(isAvenger: Bool) -> SuperHero {
-        let superHero = SuperHeroMother.givenASuperHero(isAvenger: isAvenger)
-        repository.superHeroes = [superHero]
-        return superHero
+    
+    
+    func givenASuperHero(isAvenger: Bool){
+        var superHeroes = [SuperHero]()
+        superHeroes.append(SuperHeroMother.givenASuperHero(isAvenger: isAvenger))
+        repository.superHeroes = superHeroes
     }
-
-    fileprivate func getSuperHeroDetailViewController(_ superHeroName: String) -> UIViewController {
+    
+    fileprivate func getSuperHeroDetailViewController() -> UIViewController {
         let superHeroDetailViewController = ServiceLocator()
             .provideSuperHeroDetailViewController(superHeroName) as! SuperHeroDetailViewController
-        superHeroDetailViewController.presenter = SuperHeroDetailPresenter(
-            ui: superHeroDetailViewController,
-            superHeroName: superHeroName,
-            getSuperHeroByName: GetSuperHeroByName(repository: repository)
-        )
-
-        let rootViewController = UINavigationController()
-        rootViewController.viewControllers = [superHeroDetailViewController]
-
-        return rootViewController
+        superHeroDetailViewController.presenter = SuperHeroDetailPresenter(ui: superHeroDetailViewController, superHeroName: superHeroName, getSuperHeroByName: GetSuperHeroByName(repository: repository))
+        return superHeroDetailViewController
     }
+        
 }
