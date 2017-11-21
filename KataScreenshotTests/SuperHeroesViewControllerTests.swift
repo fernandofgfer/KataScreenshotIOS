@@ -21,6 +21,14 @@ class SuperHeroesViewControllerTests: ScreenshotTest {
 
         verify(viewController: viewController)
     }
+
+    func testShowsSuperHeroesIfThereAreSuperHeroes(){
+        _ = givenThereAreSomeSuperHeroes(numberOfSuperHeroes, avengers: false)
+        
+        let viewController = getSuperHeroViewController()
+        
+        verify(viewController: viewController)
+    }
     
     fileprivate func givenThereAreSomeAvengers() -> [SuperHero] {
         return givenThereAreSomeSuperHeroes(avengers: true)
