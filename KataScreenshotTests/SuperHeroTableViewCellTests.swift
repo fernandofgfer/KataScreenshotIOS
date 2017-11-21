@@ -12,6 +12,22 @@ import XCTest
 
 class SuperHeroTableViewCellTests: ScreenshotTest {
 
+    func testSuperHeroCellAppearWithoutBadge(){
+        let cell = givenASuperHeroTableViewCell()
+        
+        cell.configure(forItem: SuperHeroMother.givenASuperHero(isAvenger: false))
+        
+        verify(view: cell)
+    }
+    
+    func testSuperHeroCellAppearWithBadge(){
+        let cell = givenASuperHeroTableViewCell()
+        
+        cell.configure(forItem: SuperHeroMother.givenASuperHero(isAvenger: true))
+        
+        verify(view: cell)
+    }
+
     private func givenASuperHeroTableViewCell() -> SuperHeroTableViewCell {
         return UINib(nibName: "SuperHeroTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil)[0] as! SuperHeroTableViewCell
     }
